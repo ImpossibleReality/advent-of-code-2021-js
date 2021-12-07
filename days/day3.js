@@ -29,3 +29,28 @@ let powerConsumption = gammaNum * epsilonNum;
 
 console.log("--- PART 1 ---");
 console.log("Power consumption: " + powerConsumption);
+
+let calc = function(second = false){
+  let out = _.unzip(input).map((n) => String(n.join(""))).slice();
+  let i = 0;
+  let tmp = "";
+
+  while (out.length > 1){
+      tmp = out.reduce((prev, line) => prev + Number(Number(line[i]) === 1), 0) < out.length / 2
+          ? "0"
+          : "1";
+
+      second && (tmp = tmp.split("").reduce((prev, n) => prev + (n === "1" ? "0" : "1"), ""));
+
+      out = out.filter(line => line[i] === tmp);
+
+      i++;
+  }
+
+  return out[0];
+};
+
+const lifeSupport = parseInt(calc(), 2) * parseInt(calc(true), 2);
+
+console.log("--- PART 2 ---");
+console.log("Life support rating: " + lifeSupport);
